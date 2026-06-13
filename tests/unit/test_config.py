@@ -73,3 +73,15 @@ audit:
     cfg = load_config(path)
     assert cfg.audit.type == "file"
     assert cfg.audit.path == "/tmp/audit.jsonl"
+
+
+def test_empty_auth_keys_rejected(tmp_path):
+    path = _write_yaml(tmp_path, """
+sentry:
+  auth_token: tok
+  organization: acme
+auth:
+  keys: []
+""")
+    with pytest.raises(Exception):  # pydantic ValidationError
+        load_config(path)

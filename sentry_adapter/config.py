@@ -19,25 +19,25 @@ def _interpolate_env(text: str) -> str:
 
 class ServerConfig(BaseModel):
     host: str = "0.0.0.0"
-    port: int = 8090
+    port: int = Field(default=8090, ge=1, le=65535)
 
 
 class SentryConfig(BaseModel):
     base_url: str = "https://sentry.io"
-    auth_token: str
+    auth_token: str = Field(min_length=1)
     organization: str
     timeout_seconds: int = 10
 
 
 class AuthKeyConfig(BaseModel):
     id: str
-    key: str
+    key: str = Field(min_length=1)
     user_id: str | None = None
     team_id: str | None = None
 
 
 class AuthConfig(BaseModel):
-    keys: list[AuthKeyConfig]
+    keys: list[AuthKeyConfig] = Field(min_length=1)
 
 
 class SanitizerConfig(BaseModel):
