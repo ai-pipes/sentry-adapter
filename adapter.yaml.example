@@ -1,0 +1,34 @@
+server:
+  host: 0.0.0.0
+  port: 8090
+
+sentry:
+  base_url: https://sentry.io
+  auth_token: ${SENTRY_AUTH_TOKEN}
+  organization: my-org
+  timeout_seconds: 10
+
+auth:
+  keys:
+    - id: key1
+      key: ${ADAPTER_API_KEY_1}
+      user_id: alice
+      team_id: engineering
+
+sanitizer:
+  entities:
+    - EMAIL_ADDRESS
+    - IP_ADDRESS
+  secrets_regex: true
+
+audit:
+  type: stdout
+  body_logging:
+    enabled: false
+
+# Для записи в файл:
+# audit:
+#   type: file
+#   path: /var/log/sentry-adapter/audit.jsonl
+#   body_logging:
+#     enabled: false
