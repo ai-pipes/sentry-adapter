@@ -1,0 +1,8 @@
+__pycache__/
+*.py[cod]
+.env
+adapter.yaml
+*.egg-info/
+dist/
+.pytest_cache/
+.mypy_cache/
