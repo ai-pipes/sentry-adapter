@@ -32,6 +32,19 @@ async def test_stdout_backend_writes_json(capsys):
     assert data["sanitized_fields"] == ["EMAIL_ADDRESS"]
     assert data["status"] == "success"
     assert data["error"] is None
+    assert data["args"] is None
+    assert data["response"] is None
+
+
+async def test_stdout_backend_writes_body_when_present(capsys):
+    backend = StdoutAuditBackend()
+    await backend.write(_make_record(
+        args={"project_slug": "backend"},
+        response=[{"id": "1"}],
+    ))
+    data = json.loads(capsys.readouterr().out.strip())
+    assert data["args"] == {"project_slug": "backend"}
+    assert data["response"] == [{"id": "1"}]
 
 
 async def test_stdout_backend_error_record(capsys):

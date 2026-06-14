@@ -22,4 +22,6 @@ def _to_dict(record: AuditRecord) -> dict:
         "sanitized_fields": record.sanitized_fields,
         "status": record.status,
         "error": record.error,
+        "args": record.args,
+        "response": record.response,
     }
